@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main</title>
+
+  <!-- font awesome cdn link  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+  <!-- custom css file link  -->
+  <link rel="stylesheet" href="index.css">
+
+
+</head>
+
+<body>
+<div class="wrapper">
+
+<div class="calc-wrapper">
+
+<div class="calc-flex">
+
+<div class="calc-display">
+
+<div class="top-num"></div>
+
+<span class="calc-num">0</span>
+
+</div>
+
+
+<div class="calc-btns">
+<button class="clear">CLEAR</button>
+<button>DELETE</button>
+</div>
+
+
+
+<div class="number-btns">
+  <button class="n-btns" value="7">7</button>
+  <button class="n-btns"  value="8">8</button>
+  <button class="n-btns"  value="9">9</button>
+  <button class="n-btns"  value="/">/</button>
+  <button class="n-btns"  value="4">4</button>
+  <button class="n-btns"  value="5">5</button>
+  <button class="n-btns"  value="6">6</button>
+  <button class="n-btns"  value="x">x</button>
+  <button class="n-btns"  value="1">1</button>
+  <button class="n-btns"  value="2">2</button>
+  <button class="n-btns"  value="3">3</button>
+  <button class="n-btns"  value="-">-</button>
+  <button class="n-btns"  value=".">.</button>
+  <button class="n-btns"  value="0">0</button>
+  <button class="n-btns"  value="=">=</button>
+  <button class="n-btns"  value="+">+</button>
+  </div>
+
+
+
+</div>
+
+
+
+
+</div>
+</div>
+
+<script>
+const topnum = document.querySelector(".top-num");
+const resultnum = document.querySelector(".calc-num");
+let div = "";
+
+const n_btns = document.querySelectorAll(".n-btns");
+const clear = document.querySelector(".clear");
+const test = [];
+const test2 = [];
+
+function num1(num){
+div = document.createElement("div");
+div.textContent = num;
+topnum.appendChild(div);
+return num;
+}
+
+
+function num2(num){
+  div = document.createElement("div");
+div.textContent = num;
+
+topnum.appendChild(div);
+return num;
+}
+
+function operator(operand){
+  div = document.createElement("div");
+div.textContent = operand;
+topnum.appendChild(div);
+return operand;
+}
+
+
+
+function Calc(){
+let result = 0;
+
+const result1 = num1(test.join(""));
+const operand = operator("/");
+const result2 = num2(2);
+
+
+switch(operand){
+
+  case "+": 
+  result = result1 + result2;
+  break;
+
+  case "-": 
+  result = result1 - result2;
+  break;
+
+  case "/": 
+  result = result1 / result2;
+  break;
+
+  case "*": 
+  result = result1 * result2;
+  break;
+}
+
+return result;
+
+}
+
+
+
+function BtnClick(e){
+
+
+  console.log(e.target.value);
+  resultnum.textContent = e.target.value;
+  test.push(e.target.value);
+  console.log(test)
+
+
+}
+
+n_btns.forEach( (btns) => {
+//console.log(btns);
+
+if(btns.textContent == "="){
+
+  btns.addEventListener("click", () => {
+    resultnum.textContent = Calc();
+    console.log(test.join(""));
+
+  });
+
+
+}else{
+  btns.addEventListener("click", BtnClick);
+
+}
+
+
+});
+
+
+
+
+topnum.textContent += " =";
+
+
+clear.addEventListener("click", () =>{
+  resultnum.textContent = 0;
+  topnum.textContent = "";
+  
+  for(let i = 0; i< test.length; i++){
+    test[i] = "";
+  }
+});
+
+</script>
+
+</body>
+
+</html>
+
