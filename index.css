@@ -38,9 +38,10 @@ border-radius: 10px;
   height: 100px;
   border: 1px solid black;
   display: flex;
-  justify-content: flex-end;
+ 
   padding: 15px;
   flex: 1;
+  background-color: azure;
 }
 
 .calc-num{
@@ -49,8 +50,15 @@ border-radius: 10px;
   display: flex;
 }
 
+.calc-displayed-nums{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  width: 100%;
+}
 .top-num{
   display: flex;
+ align-self: flex-end;
 }
 
 .calc-btns{
