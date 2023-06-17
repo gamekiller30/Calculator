@@ -25,16 +25,18 @@
 
 <div class="calc-display">
 
+  <div class="calc-displayed-nums">
+
 <div class="top-num"></div>
 
 <span class="calc-num">0</span>
-
+</div>
 </div>
 
 
 <div class="calc-btns">
 <button class="clear">CLEAR</button>
-<button>DELETE</button>
+<button class="delete">DELETE</button>
 </div>
 
 
@@ -75,24 +77,71 @@ let div = "";
 
 const n_btns = document.querySelectorAll(".n-btns");
 const clear = document.querySelector(".clear");
-const test = [];
-const test2 = [];
+const del = document.querySelector(".delete");
+
+
+let test = [];
+let test2 = [];
+let op = "";
+let count1 = 0;
+let count2 = 0;
+
+let check = true;
+
+
+
+let n1 = 0;
+let n2 = 0;
 
 function num1(num){
+ let te = "";
+ let c = 0;
+
+for(let i = 0; i < num.length; i++){
+  te += num[i];
+
+
+
+
+
+}
+
+
+
+
+//te = parseInt(te)
 div = document.createElement("div");
-div.textContent = num;
+div.textContent = te;
 topnum.appendChild(div);
-return num;
+
+return te;
 }
 
 
 function num2(num){
-  div = document.createElement("div");
-div.textContent = num;
+  let te = "";
+  let c = 0;
 
-topnum.appendChild(div);
-return num;
+for(let i = 0; i < num.length; i++){
+  te += num[i];
 }
+
+
+//te = parseInt(te)
+ 
+  div = document.createElement("div");
+div.textContent = te;
+topnum.appendChild(div);
+
+
+return te;
+
+}
+
+
+
+
+
 
 function operator(operand){
   div = document.createElement("div");
@@ -102,19 +151,67 @@ return operand;
 }
 
 
+n_btns.forEach( (btns) => {
+//console.log(btns);
+
+if(btns.textContent == "/" || btns.textContent == "x" || btns.textContent == "-" || btns.textContent == "+"){
+  
+  btns.addEventListener("click", (e) =>{
+
+    op = e.target.textContent;
+    check = false;
+
+    
+
+  })
+  
+
+}else if(btns.textContent == "="){
+
+
+  btns.addEventListener("click", () => {
+  resultnum.textContent = Calc();
+  let result = Calc();
+
+  //console.log(test.join(""));
+  test = [result];
+  test2 = [];
+  check = true;
+
+
+});
+
+
+
+
+}else{
+  btns.addEventListener("click", BtnClick);
+}
+
+});
+
+
+
+  
+
+
+
+
 
 function Calc(){
+
+topnum.textContent = "";
 let result = 0;
 
-const result1 = num1(test.join(""));
-const operand = operator("/");
-const result2 = num2(2);
+const result1 = num1(test);
+const operand = operator(op);
+const result2 = num2(test2);
 
 
 switch(operand){
 
   case "+": 
-  result = result1 + result2;
+  result = +result1 + +result2;
   break;
 
   case "-": 
@@ -125,11 +222,14 @@ switch(operand){
   result = result1 / result2;
   break;
 
-  case "*": 
+  case "x": 
   result = result1 * result2;
   break;
 }
 
+topnum.textContent += " =";
+
+result = Math.round(result * 100) / 100;
 return result;
 
 }
@@ -139,48 +239,51 @@ return result;
 function BtnClick(e){
 
 
-  console.log(e.target.value);
+ // console.log(e.target.value);
   resultnum.textContent = e.target.value;
-  test.push(e.target.value);
-  console.log(test)
 
+  if(check == true){
+    test.push(e.target.value);
+    count1++;
 
-}
-
-n_btns.forEach( (btns) => {
-//console.log(btns);
-
-if(btns.textContent == "="){
-
-  btns.addEventListener("click", () => {
-    resultnum.textContent = Calc();
-    console.log(test.join(""));
-
-  });
-
-
-}else{
-  btns.addEventListener("click", BtnClick);
-
-}
-
-
+    del.addEventListener("click", () =>{
+      test[test.length - 1] = "";
+  
 });
 
 
+  }else{
+    test2.push(e.target.value);
+    del.addEventListener("click", () =>{
+  test2[test2.length - 1] = "";
+
+});
+    count2++;
+
+    
+
+  }
+  
 
 
-topnum.textContent += " =";
+}
+
 
 
 clear.addEventListener("click", () =>{
   resultnum.textContent = 0;
   topnum.textContent = "";
   
-  for(let i = 0; i< test.length; i++){
-    test[i] = "";
-  }
+ 
+  test = [];
+  test2 = [];
+
+ //check = true;
+
 });
+
+
+
 
 </script>
 
