@@ -100,14 +100,7 @@ function num1(num){
 for(let i = 0; i < num.length; i++){
   te += num[i];
 
-
-
-
-
 }
-
-
-
 
 //te = parseInt(te)
 div = document.createElement("div");
@@ -144,51 +137,13 @@ return te;
 
 
 function operator(operand){
-  div = document.createElement("div");
+div = document.createElement("div");
 div.textContent = operand;
 topnum.appendChild(div);
 return operand;
 }
 
 
-n_btns.forEach( (btns) => {
-//console.log(btns);
-
-if(btns.textContent == "/" || btns.textContent == "x" || btns.textContent == "-" || btns.textContent == "+"){
-  
-  btns.addEventListener("click", (e) =>{
-
-    op = e.target.textContent;
-    check = false;
-
-    
-
-  })
-  
-
-}else if(btns.textContent == "="){
-
-
-  btns.addEventListener("click", () => {
-  resultnum.textContent = Calc();
-  let result = Calc();
-
-  //console.log(test.join(""));
-  test = [result];
-  test2 = [];
-  check = true;
-
-
-});
-
-
-
-
-}else{
-  btns.addEventListener("click", BtnClick);
-}
-
-});
 
 
 
@@ -230,8 +185,12 @@ switch(operand){
 topnum.textContent += " =";
 
 result = Math.round(result * 100) / 100;
-return result;
 
+
+console.log("Result1 " + result1)
+console.log("Result2 " + result2)
+
+return result;
 }
 
 
@@ -244,31 +203,75 @@ function BtnClick(e){
 
   if(check == true){
     test.push(e.target.value);
-    count1++;
-
+    
     del.addEventListener("click", () =>{
-      test[test.length - 1] = "";
-  
+      test[test.length - 1] = ""; //Wird entfernt bei weiteren calc wenn del gedrückt!!!
+      console.log("Test1 nach del " + test.join(""))
+      console.log(check)
 });
 
 
-  }else{
+  }else {
     test2.push(e.target.value);
+    
     del.addEventListener("click", () =>{
   test2[test2.length - 1] = "";
-
+  console.log("Test2 nach del " + test2.join(""))
+  console.log(check)
 });
-    count2++;
+
 
     
 
   }
   
-
-
+console.log("Test1 vor del " + test.join(""))
+console.log("Test2 vor del " + test2.join(""))
 }
 
 
+n_btns.forEach( (btns) => {
+//console.log(btns);
+
+if(btns.textContent == "/" || btns.textContent == "x" || btns.textContent == "-" || btns.textContent == "+"){
+  
+  btns.addEventListener("click", (e) =>{
+
+    op = e.target.textContent;
+    check = false;
+
+    console.log(check)
+
+  })
+  
+
+}else if(btns.textContent == "="){
+
+ //check = true;
+  btns.addEventListener("click", () => {
+
+    let result = Calc();
+  resultnum.textContent = result;
+ 
+  
+  //console.log(test.join(""));
+  test = [result];
+  test2 = [];
+
+  console.log("Result is: " + result)
+  console.log("test1 again:" + test)
+  console.log(check)
+
+});
+
+
+
+
+}else{
+  btns.addEventListener("click", BtnClick);
+}
+
+});
 
 clear.addEventListener("click", () =>{
   resultnum.textContent = 0;
@@ -278,7 +281,7 @@ clear.addEventListener("click", () =>{
   test = [];
   test2 = [];
 
- //check = true;
+ check = true;
 
 });
 
