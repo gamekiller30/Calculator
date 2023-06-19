@@ -27,7 +27,7 @@
 
   <div class="calc-displayed-nums">
 
-<div class="top-num"></div>
+<div class="top-num"><span class="num1"></span> <span class="op"></span><span class="num2"></span></div>
 
 <span class="calc-num">0</span>
 </div>
@@ -72,6 +72,9 @@
 
 <script>
 const topnum = document.querySelector(".top-num");
+const numm1 = document.querySelector(".num1");
+const oper = document.querySelector(".op");
+const numm2 = document.querySelector(".num2");
 const resultnum = document.querySelector(".calc-num");
 let div = "";
 
@@ -102,12 +105,17 @@ for(let i = 0; i < num.length; i++){
 
 }
 
+
 //te = parseInt(te)
-div = document.createElement("div");
-div.textContent = te;
-topnum.appendChild(div);
+//Appendtop(topnum, te);
 
 return te;
+}
+
+function Appendtop(area, content){
+div = document.createElement("div");
+div.textContent = content;
+area.appendChild(div);
 }
 
 
@@ -121,11 +129,7 @@ for(let i = 0; i < num.length; i++){
 
 
 //te = parseInt(te)
- 
-  div = document.createElement("div");
-div.textContent = te;
-topnum.appendChild(div);
-
+ //Appendtop(topnum, te);
 
 return te;
 
@@ -137,13 +141,55 @@ return te;
 
 
 function operator(operand){
-div = document.createElement("div");
-div.textContent = operand;
-topnum.appendChild(div);
 return operand;
 }
 
 
+n_btns.forEach( (btns) => {
+//console.log(btns);
+
+if(btns.textContent == "/" || btns.textContent == "x" || btns.textContent == "-" || btns.textContent == "+"){
+  
+  btns.addEventListener("click", (e) =>{
+
+   
+    op = e.target.textContent;
+    //Appendtop(topnum, op);
+    oper.textContent = "";
+    Appendtop(oper, op);
+    check = false;
+
+    
+
+  })
+  
+
+}else if(btns.textContent == "="){
+
+
+  btns.addEventListener("click", () => {
+  resultnum.textContent = Calc();
+  let result = Calc();
+
+  //console.log(test.join(""));
+  test = [result];
+  numm1.textContent = result;
+  numm2.textContent = "";
+  oper.textContent = "";
+  test2 = [];
+  check = true;
+
+
+});
+
+
+
+
+}else{
+  btns.addEventListener("click", BtnClick);
+}
+
+});
 
 
 
@@ -155,7 +201,7 @@ return operand;
 
 function Calc(){
 
-topnum.textContent = "";
+
 let result = 0;
 
 const result1 = num1(test);
@@ -182,106 +228,73 @@ switch(operand){
   break;
 }
 
-topnum.textContent += " =";
+//topnum.textContent += " =";
 
 result = Math.round(result * 100) / 100;
-
-
-console.log("Result1 " + result1)
-console.log("Result2 " + result2)
-
 return result;
+
 }
 
 
+del.addEventListener("click", () =>{
+
+  if(check){
+    test[test.length - 1] = "";
+    numm1.textContent = test.join("");
+      console.log("executed first array deletion");
+      console.log(test)
+  }else{
+    test2[test2.length - 1] = "";
+    numm2.textContent = test2.join("");
+  console.log(test2)
+  }
+      
+});
 
 function BtnClick(e){
 
 
  // console.log(e.target.value);
-  resultnum.textContent = e.target.value;
+ // resultnum.textContent = e.target.value;
 
   if(check == true){
     test.push(e.target.value);
-    
-    del.addEventListener("click", () =>{
-      test[test.length - 1] = ""; //Wird entfernt bei weiteren calc wenn del gedrückt!!!
-      console.log("Test1 nach del " + test.join(""))
-      console.log(check)
-});
+    console.log(test)
+   // topnum.innerHTML = "";
+   // Appendtop(topnum, test.join(""));
+   numm1.textContent = "";
+   Appendtop(numm1, test.join(""));
+    count1++;
 
 
-  }else {
+
+  }else{
+
     test2.push(e.target.value);
+    console.log(e.target.value)
+    console.log("test2 " + test2)
+ // Appendtop(topnum, test2.join(""))
+ numm2.textContent = "";
+  Appendtop(numm2, test2.join(""));
     
-    del.addEventListener("click", () =>{
-  test2[test2.length - 1] = "";
-  console.log("Test2 nach del " + test2.join(""))
-  console.log(check)
-});
-
-
-    
-
   }
   
-console.log("Test1 vor del " + test.join(""))
-console.log("Test2 vor del " + test2.join(""))
+
+
 }
 
 
-n_btns.forEach( (btns) => {
-//console.log(btns);
-
-if(btns.textContent == "/" || btns.textContent == "x" || btns.textContent == "-" || btns.textContent == "+"){
-  
-  btns.addEventListener("click", (e) =>{
-
-    op = e.target.textContent;
-    check = false;
-
-    console.log(check)
-
-  })
-  
-
-}else if(btns.textContent == "="){
-
- //check = true;
-  btns.addEventListener("click", () => {
-
-    let result = Calc();
-  resultnum.textContent = result;
- 
-  
-  //console.log(test.join(""));
-  test = [result];
-  test2 = [];
-
-  console.log("Result is: " + result)
-  console.log("test1 again:" + test)
-  console.log(check)
-
-});
-
-
-
-
-}else{
-  btns.addEventListener("click", BtnClick);
-}
-
-});
 
 clear.addEventListener("click", () =>{
   resultnum.textContent = 0;
-  topnum.textContent = "";
-  
+  numm1.textContent = "";
+  numm2.textContent = "";
+  oper.textContent = "";
  
   test = [];
   test2 = [];
 
- check = true;
+ //check = true;
 
 });
 
@@ -293,4 +306,5 @@ clear.addEventListener("click", () =>{
 </body>
 
 </html>
+
 
